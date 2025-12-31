@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #202020;
+  background-color: #e0ffffa0;
+}
+
+.navbar {
+  background-color: green;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.navbar-center {
+  width: 100%;
+  padding: 0 5rem;
+  justify-items: right;
+
+}
+
+.cart-btn {
+  display: flex;
+}
+
+.nav-icon {
+  margin: 5px;
+  color: #e0ffffff;
+  font-size: 1.5rem;
+}
+
+.cart-items {
+  margin: 5px;
+  color: white;
+}
