@@ -1,0 +1,148 @@
+{
+  "items": [
+    {
+      "sys": {
+        "id": "1"
+      },
+      "fields": {
+        "title": "Wireless headphones",
+        "price": 99,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_1.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "2"
+      },
+      "fields": {
+        "title": "Running sneakers",
+        "price": 89,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_2.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "3"
+      },
+      "fields": {
+        "title": "Fitness smartwatch",
+        "price": 199,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_3.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "4"
+      },
+      "fields": {
+        "title": "DSLR camera",
+        "price": 499,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_4.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "5"
+      },
+      "fields": {
+        "title": "Skincare collection",
+        "price": 49,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_5.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "6"
+      },
+      "fields": {
+        "title": "Leather backpack",
+        "price": 79,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_6.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "7"
+      },
+      "fields": {
+        "title": "Game controller",
+        "price": 99,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_7.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "8"
+      },
+      "fields": {
+        "title": "Perfume bottle",
+        "price": 59,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_8.png"
+            }
+          }
+        }
+      }
+    },
+    {
+      "sys": {
+        "id": "9"
+      },
+      "fields": {
+        "title": "Watch",
+        "price": 109,
+        "image": {
+          "fields": {
+            "file": {
+              "url": "./image/product_image_9.png"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
