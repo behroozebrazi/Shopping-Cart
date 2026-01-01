@@ -72,7 +72,7 @@ body {
   padding: 1rem;
   justify-content: center;
   display: grid;
-  gap: 1rem;
+  gap: 2rem;
   grid-template-columns: 280px;
 }
 
