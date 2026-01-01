@@ -27,7 +27,7 @@ class View {
   // show products in DOM
   displayProducts(products) {
     let productsCenter = ''
-    products.forEach((item) => {
+    products.forEach(item => {
       const newItem = `
         <article class="product">
           <div class="img-container">
@@ -42,12 +42,47 @@ class View {
     })
     document.querySelector('.products-center').innerHTML = productsCenter
   }
+
+  // add listener to buttons "Add to cart"
+  getCartButtons() {
+    // return a Nodelist (which doesn't have the list methods, such as map, filter, reduce, push, pop)
+    const buttonsNodelist = document.querySelectorAll('.product-btn')
+    // convert a Nodelist to a List by spread operator [...]
+    const buttons = [...buttonsNodelist]
+
+
+
+    buttons.forEach(button => {
+      let id = button.dataset.id
+      let cartItem = Storage.getProduct(id)
+
+      // add listener to buttons
+      button.addEventListener('click', (event) => {
+        // cart.push({ ...cartItem, amount: 1 })
+        cart = [...cart, { ...cartItem, amount: 1 }]
+
+        console.log(cart)
+
+
+      })
+    })
+  }
 }
 
-// Storage products
+// Manage storage products
 class Storage {
   static saveProducts(products) {
     localStorage.setItem('products', JSON.stringify(products))
+  }
+  static getProduct(id) {
+    const products = JSON.parse(localStorage.getItem('products'))
+    return products.find(item => item.id === id)
+  }
+  static saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }
+  static getCart() {
+    return JSON.parse(localStorage.getItem('cart'))
   }
 }
 
@@ -56,13 +91,13 @@ class Storage {
 document.addEventListener('DOMContentLoaded', (e) => {
   const product = new Product()
   const view = new View()
-  const storage = new Storage()
 
   const products = product.getProducts()
     .then(products => {
       view.displayProducts(products)
       Storage.saveProducts(products)
     })
+    .then(() => view.getCartButtons())
 
 })
 
