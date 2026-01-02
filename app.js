@@ -3,6 +3,8 @@ const productsCenter = document.querySelector('.products-center')
 const cartItems = document.querySelector('.cart-items')
 const cartTotal = document.querySelector('.cart-total')
 const cartContent = document.querySelector('.cart-content')
+const cartOverlay = document.querySelector('.cart-overlay')
+const cartDOM = document.querySelector('.cart')
 
 let cart = []
 
@@ -72,6 +74,7 @@ class View {
         Storage.saveCart(cart)
         this.setCartValues(cart)
         this.addCartItem(cartItem)
+        this.showCart()
       })
     })
   }
@@ -94,18 +97,24 @@ class View {
     div.classList.add('cart-item')
     div.innerHTML = `
       <img src=${item.image} alt=${item.title}>
-        <div>
-          <h4>${item.title}</h4>
-          <h5>$${item.price}</h5>
-          <span class="remove-item">Delete</span>
-        </div>
-        <div>
-          <i class="fas-fa-chevron-up"></i>
-          <p class="item-amount">${item.amount}</p>
-          <i class="fas-fa-chevron-down"></i>
-        </div>
-`
+      <div>
+        <h4>${item.title}</h4>
+        <h5>$${item.price}</h5>
+        <span class="remove-item">Delete</span>
+      </div>
+      <div>
+        <i class="fas fa-chevron-up"></i>
+        <p class="item-amount">${item.amount}</p>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    `
     cartContent.appendChild(div)
+  }
+
+  // Show cart bar
+  showCart() {
+    cartOverlay.classList.add('transparentBcg')
+    cartDOM.classList.add('show-cart')
   }
 }
 

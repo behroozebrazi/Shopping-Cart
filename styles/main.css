@@ -155,12 +155,14 @@ h4 {
 }
 
 .cart {
-  direction: rtl;
   position: fixed;
   top: 0;
   right: 0;
+  margin: 0;
+  padding: 1rem;
   width: 100%;
   height: 100%;
+  justify-items: center;
   overflow: scroll;
   z-index: 3;
   background-color: #e0ffd0a0;
@@ -169,6 +171,58 @@ h4 {
   transform: translateX(100%);
 }
 
+.cart>div {
+  margin: 2rem;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  width: 350px;
+}
+
+.cart-item>img {
+  width: 30%;
+  height: 30%;
+}
+
+.cart-item * {
+  margin: 0;
+  padding: 0;
+  direction: ltr;
+  color: red;
+}
+
+.cart-item>div:first-of-type>* {
+  margin: auto;
+  padding: auto;
+  width: 200px;
+  height: 40px;
+}
+
+.cart-item>div> :is(p, i) {
+  margin: 2px;
+  padding: 5px;
+  text-align: center;
+}
+
 .close-cart {
-  color: lightgoldenrodyellow;
+  color: darkgreen;
+}
+
+.show-cart {
+  transform: translateX(0);
+}
+
+.transparentBcg {
+  visibility: visible;
+}
+
+@media screen and (min-width: 500px) {
+  .cart {
+    width: 30vw;
+    min-width: 400px;
+  }
 }
