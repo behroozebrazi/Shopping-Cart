@@ -149,7 +149,7 @@ h4 {
   width: 100%;
   height: 100%;
   transition: all 0.5s linear;
-  background-color: rgb(0, 0, 0, 0.3);
+  background-color: rgb(0, 0, 0, 0.5);
   z-index: 2;
   visibility: hidden;
 }
@@ -186,25 +186,27 @@ h4 {
 .cart-item>img {
   width: 30%;
   height: 30%;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 2px darkgreen;
 }
 
-.cart-item * {
-  margin: 0;
+.cart-item>* {
+  margin: 5px;
   padding: 0;
   direction: ltr;
-  color: red;
 }
 
 .cart-item>div:first-of-type>* {
   margin: auto;
   padding: auto;
   width: 200px;
-  height: 40px;
+  height: 35px;
 }
 
 .cart-item>div> :is(p, i) {
   margin: 2px;
-  padding: 5px;
+  padding: 2px;
   text-align: center;
 }
 

@@ -50,7 +50,7 @@ class View {
     productsCenter.innerHTML = productsCenterItems
   }
 
-  // Add a product to cart
+  // Add a product to cart - click on product button
   getCartButtons() {
     // return a Nodelist (which doesn't have the list methods, such as map, filter, reduce, push, pop)
     const buttonsNodelist = document.querySelectorAll('.product-btn')
@@ -59,9 +59,10 @@ class View {
     // add event listener to buttons
     buttons.forEach(button => {
       let id = button.dataset.id
-      button.addEventListener('click', (event) => {
+      button.addEventListener('click', () => {
         let cartItem = Storage.getProduct(id)
-        // update cart
+        /// Update cart with a product at browser
+        // get cart's products from browser
         cart = Storage.getCart()
         let cartIndex = cart.findIndex(item => item.id === cartItem.id)
         if (cartIndex >= 0) {
@@ -71,15 +72,19 @@ class View {
           cartItem = { ...cartItem, amount: 1 }
           cart = [...cart, cartItem] // cart.push(cartItem)
         }
+        // save cart's products to browser
         Storage.saveCart(cart)
+        // calculate total and price of cart and add to DOM
         this.setCartValues(cart)
+        // add an item to cart in DOM
         this.addCartItem(cartItem)
+        // show cart sidebar
         this.showCart()
       })
     })
   }
 
-  // Calculate total and price of cart
+  // Calculate total and price of cart and add to DOM
   setCartValues(cart) {
     let totalItems = 0
     let totalPrice = 0
@@ -88,7 +93,7 @@ class View {
       totalPrice += item.amount * item.price
     })
     cartItems.innerText = totalItems
-    cartTotal.innerText = totalPrice
+    cartTotal.innerText = '$' + totalPrice
   }
 
   // Add an item to cart in DOM
@@ -111,25 +116,39 @@ class View {
     cartContent.appendChild(div)
   }
 
-  // Show cart bar
+  // Show cart sidebar
   showCart() {
     cartOverlay.classList.add('transparentBcg')
     cartDOM.classList.add('show-cart')
+  }
+
+  // Initialize App
+  initApp() {
+    cart = Storage.getCart()
+    cart.forEach(item => { this.addCartItem(item) })
+    this.setCartValues(cart)
   }
 }
 
 // Manage storage products
 class Storage {
+  // Save products in browser
   static saveProducts(products) {
     localStorage.setItem('products', JSON.stringify(products))
   }
+
+  // Get a product by a product id
   static getProduct(id) {
     const products = JSON.parse(localStorage.getItem('products'))
     return products.find(item => item.id === id)
   }
+
+  // Save cart's products to browser
   static saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart))
   }
+
+  // Get cart's products from browser
   static getCart() {
     const cart = localStorage.getItem('cart')
     return cart ? JSON.parse(cart) : []
@@ -142,23 +161,17 @@ document.addEventListener('DOMContentLoaded', (e) => {
   const product = new Product()
   const view = new View()
 
+  // Initialize app
+  view.initApp()
+
   const products = product.getProducts()
     .then(products => {
       view.displayProducts(products)
       Storage.saveProducts(products)
-      cart = Storage.getCart()
     })
     .then(() => {
-      view.setCartValues(cart)
       view.getCartButtons()
     })
 
-
-
-
 })
-
-
-
-
 
