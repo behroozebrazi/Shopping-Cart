@@ -165,7 +165,7 @@ h4 {
   justify-items: center;
   overflow: scroll;
   z-index: 3;
-  background-color: #e0ffd0a0;
+  background-color: #e0ffd0e0;
   padding: 1.5rem;
   transition: all 0.5s linear;
   transform: translateX(100%);

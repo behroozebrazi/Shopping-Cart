@@ -7,6 +7,7 @@ const cartOverlay = document.querySelector('.cart-overlay')
 const cartDOM = document.querySelector('.cart')
 const closeCartBtn = document.querySelector('.close-cart')
 const cartBtn = document.querySelector('.cart-btn')
+const clearCartBtn = document.querySelector('.clear-cart')
 
 let cart = []
 
@@ -28,6 +29,31 @@ class Product {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+// Manage storage products
+class Storage {
+  // Save products in browser
+  static saveProducts(products) {
+    localStorage.setItem('products', JSON.stringify(products))
+  }
+
+  // Get a product by a product id
+  static getProduct(id) {
+    const products = JSON.parse(localStorage.getItem('products'))
+    return products.find(item => item.id === id)
+  }
+
+  // Save cart's products to browser
+  static saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart))
+  }
+
+  // Get cart's products from browser
+  static getCart() {
+    const cart = localStorage.getItem('cart')
+    return cart ? JSON.parse(cart) : []
   }
 }
 
@@ -152,30 +178,26 @@ class View {
     this.openCart()
     this.closeCart()
   }
-}
 
-// Manage storage products
-class Storage {
-  // Save products in browser
-  static saveProducts(products) {
-    localStorage.setItem('products', JSON.stringify(products))
+  // 
+  cartProcess() {
+    clearCartBtn.addEventListener('click', () => this.clearCart())
   }
 
-  // Get a product by a product id
-  static getProduct(id) {
-    const products = JSON.parse(localStorage.getItem('products'))
-    return products.find(item => item.id === id)
+  // Remove all products from cart
+  clearCart() {
+    let cartItems = cart.map((item) => { return item.id })
+    console.log(cartItems)
+    cartItems.forEach((id) => { return this.removeProduct(id) })
+    while (cartContent.children.length > 0)
+      cartContent.removeChild(cartContent.children[0])
   }
 
-  // Save cart's products to browser
-  static saveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart))
-  }
-
-  // Get cart's products from browser
-  static getCart() {
-    const cart = localStorage.getItem('cart')
-    return cart ? JSON.parse(cart) : []
+  // Remove one product from cart
+  removeProduct(id) {
+    cart = cart.filter(item => item.id !== id)
+    this.setCartValues(cart)
+    Storage.saveCart(cart)
   }
 }
 
@@ -195,6 +217,7 @@ document.addEventListener('DOMContentLoaded', (e) => {
     })
     .then(() => {
       view.getCartButtons()
+      view.cartProcess()
     })
 
 })
