@@ -5,6 +5,8 @@ const cartTotal = document.querySelector('.cart-total')
 const cartContent = document.querySelector('.cart-content')
 const cartOverlay = document.querySelector('.cart-overlay')
 const cartDOM = document.querySelector('.cart')
+const closeCartBtn = document.querySelector('.close-cart')
+const cartBtn = document.querySelector('.cart-btn')
 
 let cart = []
 
@@ -130,13 +132,16 @@ class View {
 
   // Open cart sidebar
   openCart() {
-    document.querySelector('.cart-btn').addEventListener('click', () => { this.showCart() })
+    cartBtn.addEventListener('click', () => { this.showCart() })
   }
 
   // Close cart sidebar
   closeCart() {
-    document.querySelector('.close-cart').addEventListener('click', () => { hideCart() })
-    document.querySelector('.cart-overlay').addEventListener('click', () => { hideCart() })
+    closeCartBtn.addEventListener('click', () => { this.hideCart() })
+    cartOverlay.addEventListener('click', (event) => {
+      if (event.target === cartOverlay)
+        this.hideCart()
+    })
   }
 
   // Initialize App
@@ -144,6 +149,8 @@ class View {
     cart = Storage.getCart()
     cart.forEach(item => { this.addCartItem(item) })
     this.setCartValues(cart)
+    this.openCart()
+    this.closeCart()
   }
 }
 
@@ -188,8 +195,6 @@ document.addEventListener('DOMContentLoaded', (e) => {
     })
     .then(() => {
       view.getCartButtons()
-      view.closeCart()
-      view.openCart()
     })
 
 })
