@@ -76,19 +76,19 @@ body {
   grid-template-columns: 280px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 700px) {
   .products-center {
     grid-template-columns: repeat(2, 280px);
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   .products-center {
     grid-template-columns: repeat(3, 280px);
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1350px) {
   .products-center {
     grid-template-columns: repeat(4, 280px);
   }
@@ -155,6 +155,7 @@ h4 {
 }
 
 .cart {
+  direction: rtl;
   position: fixed;
   top: 0;
   right: 0;

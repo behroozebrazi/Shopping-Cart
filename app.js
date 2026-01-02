@@ -2,6 +2,7 @@
 const productsCenter = document.querySelector('.products-center')
 const cartItems = document.querySelector('.cart-items')
 const cartTotal = document.querySelector('.cart-total')
+const cartContent = document.querySelector('.cart-content')
 
 let cart = []
 
@@ -63,12 +64,14 @@ class View {
         let cartIndex = cart.findIndex(item => item.id === cartItem.id)
         if (cartIndex >= 0) {
           cart[cartIndex].amount += 1
+          cartItem = cart[cartIndex]
         } else {
-          // cart.push({ ...cartItem, amount: 1 })
-          cart = [...cart, { ...cartItem, amount: 1 }]
+          cartItem = { ...cartItem, amount: 1 }
+          cart = [...cart, cartItem] // cart.push(cartItem)
         }
         Storage.saveCart(cart)
         this.setCartValues(cart)
+        this.addCartItem(cartItem)
       })
     })
   }
@@ -83,6 +86,26 @@ class View {
     })
     cartItems.innerText = totalItems
     cartTotal.innerText = totalPrice
+  }
+
+  // Add an item to cart in DOM
+  addCartItem(item) {
+    const div = document.createElement('div')
+    div.classList.add('cart-item')
+    div.innerHTML = `
+      <img src=${item.image} alt=${item.title}>
+        <div>
+          <h4>${item.title}</h4>
+          <h5>$${item.price}</h5>
+          <span class="remove-item">Delete</span>
+        </div>
+        <div>
+          <i class="fas-fa-chevron-up"></i>
+          <p class="item-amount">${item.amount}</p>
+          <i class="fas-fa-chevron-down"></i>
+        </div>
+`
+    cartContent.appendChild(div)
   }
 }
 
