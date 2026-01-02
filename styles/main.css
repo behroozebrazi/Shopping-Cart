@@ -210,8 +210,26 @@ h4 {
   text-align: center;
 }
 
+.cart-item>div>i {
+  cursor: pointer;
+}
+
+.clear-cart {
+  font: inherit;
+  font-size: medium;
+  width: 10rem;
+  height: 2rem;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: lightgreen;
+  color: darkgreen;
+  cursor: pointer;
+}
+
 .close-cart {
   color: darkgreen;
+  cursor: pointer;
 }
 
 .show-cart {

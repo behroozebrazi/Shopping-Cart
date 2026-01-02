@@ -122,6 +122,23 @@ class View {
     cartDOM.classList.add('show-cart')
   }
 
+  // Hide cart sidebar
+  hideCart() {
+    cartOverlay.classList.remove('transparentBcg')
+    cartDOM.classList.remove('show-cart')
+  }
+
+  // Open cart sidebar
+  openCart() {
+    document.querySelector('.cart-btn').addEventListener('click', () => { this.showCart() })
+  }
+
+  // Close cart sidebar
+  closeCart() {
+    document.querySelector('.close-cart').addEventListener('click', () => { hideCart() })
+    document.querySelector('.cart-overlay').addEventListener('click', () => { hideCart() })
+  }
+
   // Initialize App
   initApp() {
     cart = Storage.getCart()
@@ -171,6 +188,8 @@ document.addEventListener('DOMContentLoaded', (e) => {
     })
     .then(() => {
       view.getCartButtons()
+      view.closeCart()
+      view.openCart()
     })
 
 })
