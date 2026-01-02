@@ -1,4 +1,8 @@
 
+const productsCenter = document.querySelector('.products-center')
+const cartItems = document.querySelector('.cart-items')
+const cartTotal = document.querySelector('.cart-total')
+
 let cart = []
 
 // Receive product from product.json
@@ -26,7 +30,7 @@ class Product {
 class View {
   // show products in DOM
   displayProducts(products) {
-    let productsCenter = ''
+    let productsCenterItems = ''
     products.forEach(item => {
       const newItem = `
         <article class="product">
@@ -38,34 +42,47 @@ class View {
           <h4>$${item.price}</h4>
         </article>
       `
-      productsCenter += newItem
+      productsCenterItems += newItem
     })
-    document.querySelector('.products-center').innerHTML = productsCenter
+    productsCenter.innerHTML = productsCenterItems
   }
 
-  // add listener to buttons "Add to cart"
+  // Add a product to cart
   getCartButtons() {
     // return a Nodelist (which doesn't have the list methods, such as map, filter, reduce, push, pop)
     const buttonsNodelist = document.querySelectorAll('.product-btn')
     // convert a Nodelist to a List by spread operator [...]
     const buttons = [...buttonsNodelist]
-
-
-
+    // add event listener to buttons
     buttons.forEach(button => {
       let id = button.dataset.id
-      let cartItem = Storage.getProduct(id)
-
-      // add listener to buttons
       button.addEventListener('click', (event) => {
-        // cart.push({ ...cartItem, amount: 1 })
-        cart = [...cart, { ...cartItem, amount: 1 }]
-
-        console.log(cart)
-
-
+        let cartItem = Storage.getProduct(id)
+        // update cart
+        cart = Storage.getCart()
+        let cartIndex = cart.findIndex(item => item.id === cartItem.id)
+        if (cartIndex >= 0) {
+          cart[cartIndex].amount += 1
+        } else {
+          // cart.push({ ...cartItem, amount: 1 })
+          cart = [...cart, { ...cartItem, amount: 1 }]
+        }
+        Storage.saveCart(cart)
+        this.setCartValues(cart)
       })
     })
+  }
+
+  // Calculate total and price of cart
+  setCartValues(cart) {
+    let totalItems = 0
+    let totalPrice = 0
+    cart.forEach(item => {
+      totalItems += item.amount
+      totalPrice += item.amount * item.price
+    })
+    cartItems.innerText = totalItems
+    cartTotal.innerText = totalPrice
   }
 }
 
@@ -82,7 +99,8 @@ class Storage {
     localStorage.setItem('cart', JSON.stringify(cart))
   }
   static getCart() {
-    return JSON.parse(localStorage.getItem('cart'))
+    const cart = localStorage.getItem('cart')
+    return cart ? JSON.parse(cart) : []
   }
 }
 
@@ -96,8 +114,15 @@ document.addEventListener('DOMContentLoaded', (e) => {
     .then(products => {
       view.displayProducts(products)
       Storage.saveProducts(products)
+      cart = Storage.getCart()
     })
-    .then(() => view.getCartButtons())
+    .then(() => {
+      view.setCartValues(cart)
+      view.getCartButtons()
+    })
+
+
+
 
 })
 
