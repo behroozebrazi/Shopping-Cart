@@ -104,8 +104,12 @@ class View {
         Storage.saveCart(cart)
         // calculate total and price of cart and add to DOM
         this.setCartValues(cart)
-        // add an item to cart in DOM
-        this.addCartItem(cartItem)
+        // add a product or update amount a product to cart in DOM
+        const cartItemAmount = document.querySelector(`.item-amount[id='${cartItem.id}']`)
+        if (cartItemAmount)
+          cartItemAmount.innerText = cartItem.amount
+        else
+          this.addCartItem(cartItem)
         // show cart sidebar
         this.showCart()
       })
@@ -124,7 +128,7 @@ class View {
     cartTotal.innerText = '$' + totalPrice
   }
 
-  // Add an item to cart in DOM
+  // Add a product to cart in DOM
   addCartItem(item) {
     const div = document.createElement('div')
     div.classList.add('cart-item')
@@ -137,7 +141,7 @@ class View {
       </div>
       <div>
         <i class="fas fa-chevron-up" data-id=${item.id}></i>
-        <p class="item-amount">${item.amount}</p>
+        <p class="item-amount" id=${item.id}>${item.amount}</p>
         <i class="fas fa-chevron-down" data-id=${item.id}></i>
       </div>
     `
@@ -233,7 +237,6 @@ class View {
   // Remove all products from cart
   clearCart() {
     let cartItems = cart.map((item) => { return item.id })
-    console.log(cartItems)
     cartItems.forEach((id) => { return this.removeProduct(id) })
     while (cartContent.children.length > 0)
       cartContent.removeChild(cartContent.children[0])
