@@ -133,12 +133,12 @@ class View {
       <div>
         <h4>${item.title}</h4>
         <h5>$${item.price}</h5>
-        <span class="remove-item">Delete</span>
+        <span class="remove-item" data-id=${item.id}>Delete</span>
       </div>
       <div>
-        <i class="fas fa-chevron-up"></i>
+        <i class="fas fa-chevron-up" data-id=${item.id}></i>
         <p class="item-amount">${item.amount}</p>
-        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-chevron-down" data-id=${item.id}></i>
       </div>
     `
     cartContent.appendChild(div)
@@ -181,7 +181,53 @@ class View {
 
   // 
   cartProcess() {
+    // remove all products
     clearCartBtn.addEventListener('click', () => this.clearCart())
+    // remove one product
+    cartContent.addEventListener('click', (event) => {
+      // make sure it is the correct button and class name
+      if (event.target.classList.contains('remove-item')) {
+        const removeItem = event.target
+        // remove a div (tag) and its all inner html from DOM
+        cartContent.removeChild(removeItem.parentElement.parentElement)
+        // remove a product from the cart
+        this.removeProduct(removeItem.dataset.id)
+      }
+
+      // arrow up process (listener)
+      if (event.target.classList.contains('fa-chevron-up')) {
+        let arrowUp = event.target // arrow up object
+        let id = arrowUp.dataset.id // id of arrow up object
+        let product = cart.find(item => item.id === id)
+        product.amount += 1
+        /// Node.nextSibling & Node.previousSibling Methods
+        // update amount of the product
+        arrowUp.nextElementSibling.innerText = product.amount
+        this.setCartValues(cart)
+        Storage.saveCart(cart)
+      }
+      // arrow down process (listener)
+      if (event.target.classList.contains('fa-chevron-down')) {
+        let arrowDown = event.target // arrow down object
+        let id = arrowDown.dataset.id // id of arrow down object
+        let product = cart.find(item => item.id === id)
+        if (product.amount > 1) {
+          product.amount -= 1
+          /// Node.nextSibling & Node.previousSibling Methods
+          // update amount of the product
+          arrowDown.previousElementSibling.innerText = product.amount
+          this.setCartValues(cart)
+          Storage.saveCart(cart)
+        }
+        else { // remove from cart
+          this.removeProduct(id)
+          // remove from DOM
+          cartContent.removeChild(arrowDown.parentElement.parentElement)
+        }
+      }
+    })
+
+
   }
 
   // Remove all products from cart
